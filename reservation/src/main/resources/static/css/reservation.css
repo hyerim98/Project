@@ -1,0 +1,22 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 한 줄에 최대 몇개를 채울 것인지에 대한 설정 */
+    gap: 10px;
+}
+
+.rectangle {
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer; /* 클릭 가능하게 시각적 표시 */
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
