@@ -19,17 +19,17 @@ $(document).ready(function() {
               dataKeys = Object.keys(datas);
 
               const html = `
-                   <div class="rectangle" id="time10" onclick="timeTableClick('${dataKeys[0]}');">10:00<br>(${datas.time10}/150)</div>
-                   <div class="rectangle" id="time12" onclick="timeTableClick('${dataKeys[1]}');">12:00<br>(${datas.time12}/150)</div>
-                   <div class="rectangle" id="time14" onclick="timeTableClick('${dataKeys[2]}');">14:00<br>(${datas.time14}/150)</div>
-                   <div class="rectangle" id="time17" onclick="timeTableClick('${dataKeys[3]}');">17:00<br>(${datas.time17}/150)</div>
+                   <div class="rectangle" id="time10" onclick="timeTableClick('${dataKeys[0]}');">10:00<br>${datas.time10}매</div>
+                   <div class="rectangle" id="time12" onclick="timeTableClick('${dataKeys[1]}');">12:00<br>${datas.time12}매</div>
+                   <div class="rectangle" id="time14" onclick="timeTableClick('${dataKeys[2]}');">14:00<br>${datas.time14}매</div>
+                   <div class="rectangle" id="time17" onclick="timeTableClick('${dataKeys[3]}');">17:00<br>${datas.time17}매</div>
                `;
 
               $(".grid-container").html(html);
               $("#timeTable").show();
           },
           error: function(xhr, status, error) {
-            console.error('Error:', error);
+            console.error('에러 원인 :' + error);
           }
         });
 
@@ -43,7 +43,36 @@ $(document).ready(function() {
     });
 
     // '예약하기' 버튼 클릭
-    $("#reservationBtn").on('click', function () {
+    $("#reservationBtn").on('click', function (event) {
+        event.preventDefault(); // 기본 폼 제출 동작 중단
+
+        // 커스텀 동작 수행 (예: 유효성 검사 또는 AJAX 전송)
+        const formData = $("#reservationForm")[0]; // DOM 객체로 변환
+        const inputs = formData.querySelectorAll("input"); // 모든 input 필드 가져오기
+
+        // 유효성 검사 실패 시 잘못된 필드 확인
+        if(!formData.checkValidity()) {
+            inputs.forEach((input) => {
+                const errorSpan = $("#" + input.id + "Error"); // 해당 필드의 에러 메시지 요소
+                if (!input.checkValidity()) {
+                    // 필드 유효성 검사 실패 시 에러 메시지 표시
+                    if (input.validity.valueMissing) {
+                      errorSpan.text("필수 값 입니다.");
+                    } else if (input.validity.patternMismatch) {
+                      errorSpan.text("휴대폰 번호 형식에 맞게 입력해주세요.(010-1111-1111)");
+                    } else if (input.validity.typeMismatch) {
+                      errorSpan.text("이메일 형식에 맞게 입력해주세요.(abc@naver.com)");
+                    } else {
+                      errorSpan.text("올바른 값이 아닙니다.");
+                    }
+                }
+                else {
+                  errorSpan.text(""); // 유효하면 에러 메시지 제거
+                }
+            });
+            return;
+        }
+
         reservation();
     });
 });
@@ -67,15 +96,6 @@ function reservation() {
     let people = $("#people").val();
     let date = $("#date").val().split("-");
 
-    if(name === "" || email === "" || phone === "" || people === "" || date === "") {
-        alert("값을 입력해주세요.");
-        return;
-    }
-    if(chkTime === undefined) {
-        alert("시간을 선택해주세요.");
-        return;
-    }
-
     $.ajax({
           url: '/reservation',
           type: 'POST',
@@ -89,14 +109,14 @@ function reservation() {
           },
           dataType: 'text',
           success: function(data) {
-              if(data === "fail") {
-                  alert("예약에 실패하였습니다.");
-              } else {
+              if(data === "SUCCESS") {
                   alert("예약이 완료되었습니다.");
+              } else {
+                  alert("예약에 실패하였습니다.");
               }
           },
           error: function(xhr, status, error) {
-            console.error('Error:', error);
+            alert("예약에 실패하였습니다.");
           }
     });
 }

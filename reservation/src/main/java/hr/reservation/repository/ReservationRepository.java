@@ -19,8 +19,8 @@ public class ReservationRepository {
 
     public void reserve(ReservationForm reservation) {
         Map<String, Integer> timeMap = dateMap.get(reservation.getDate());
-        int spareSeat = timeMap.get(reservation.getTime()) - reservation.getPeople();
-        timeMap.put(reservation.getTime(), spareSeat);
+        int remainTicket = timeMap.get(reservation.getTime()) - reservation.getPeople();
+        timeMap.put(reservation.getTime(), remainTicket);
 
         reserveMap.put(++sequenceId, reservation);
     }
