@@ -17,12 +17,19 @@ public class ReservationRepository {
         return dateMap.get(date);
     }
 
+    // 예약
     public void reserve(ReservationForm reservation) {
         Map<String, Integer> timeMap = dateMap.get(reservation.getDate());
-        int remainTicket = timeMap.get(reservation.getTime()) - reservation.getPeople();
+        int remainTicket = availablePeople(reservation) - reservation.getPeople();
         timeMap.put(reservation.getTime(), remainTicket);
 
         reserveMap.put(++sequenceId, reservation);
+    }
+
+    // 예약 가능 인원
+    public int availablePeople(ReservationForm reservation) {
+        Map<String, Integer> timeMap = dateMap.get(reservation.getDate());
+        return timeMap.get(reservation.getTime());
     }
 
     public void cancel(String time, int num) {

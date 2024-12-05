@@ -63,7 +63,7 @@ $(document).ready(function() {
                     } else if (input.validity.typeMismatch) {
                       errorSpan.text("이메일 형식에 맞게 입력해주세요.(abc@naver.com)");
                     } else {
-                      errorSpan.text("올바른 값이 아닙니다.");
+                      errorSpan.text("1명이상 부터 가능합니다.");
                     }
                 }
                 else {
@@ -107,16 +107,24 @@ function reservation() {
               date: date[1] + date[2],
               time: chkTime
           },
-          dataType: 'text',
+          dataType: 'json',
           success: function(data) {
-              if(data === "SUCCESS") {
+              const code = data.code;
+
+              if(code === "2000") {
                   alert("예약이 완료되었습니다.");
+                  location.href = '/';
+              } else if (code === "9001") {
+                  alert("예약 가능 인원을 초과하였습니다.");
+                  $("#people").val("");
               } else {
                   alert("예약에 실패하였습니다.");
+                  location.reload();
               }
           },
           error: function(xhr, status, error) {
             alert("예약에 실패하였습니다.");
+            location.reload();
           }
     });
 }

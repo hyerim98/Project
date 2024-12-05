@@ -37,15 +37,21 @@ public class ReservationController {
 
     @ResponseBody
     @PostMapping
-    public String reservation(@Validated @ModelAttribute ReservationForm form, BindingResult bindingResult) {
+    public ErrorResult reservation(@Validated @ModelAttribute ReservationForm form, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             log.error("[reservation] ERROR = {}", bindingResult);
             throw new BindingResultException("valid 오류");
-            //return Constants.FAIL_MSG;
+        }
+
+        // 예약 인원이 최대 가능 수용을 초과한 경우
+        int availablePeople = reservationRepository.availablePeople(form);
+        if(availablePeople < form.getPeople()) {
+            log.info("[reservation] 예약 가능 인원을 초과하였습니다.({})",form.getName());
+            return new ErrorResult(Constants.RESERVATION_CAPA_EXCEED_CODE, Constants.RESERVATION_CAPA_EXCEED_MSG);
         }
 
         reservationRepository.reserve(form);
-        return Constants.SUCCESS_MSG;
+        return new ErrorResult(Constants.SUCCESS_CODE, Constants.SUCCESS_MSG);
     }
 
 
