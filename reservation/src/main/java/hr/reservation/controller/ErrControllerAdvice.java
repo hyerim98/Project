@@ -12,6 +12,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +22,15 @@ import java.util.Map;
 public class ErrControllerAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResult unknownException(Exception e) {
+    /*public ErrorResult unknownException(Exception e) { // 오류 - 코드
         log.error("[unknownException] ", e);
         return new ErrorResult(Constants.INTERNAL_SERVER_CODE, Constants.INTERNAL_SERVER_MSG);
+    }*/
+    public ModelAndView unknownException(Exception e) { // 오류 - 페이지
+        log.error("[unknownException] ", e);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/500");
+        return modelAndView;
     }
 
     @ExceptionHandler
