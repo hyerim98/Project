@@ -96,6 +96,11 @@ function reservation() {
     let people = $("#people").val();
     let date = $("#date").val().split("-");
 
+    if(chkTime === undefined) {
+        alert("시간을 선택해주세요");
+        return;
+    }
+
     $.ajax({
           url: '/reservation',
           type: 'POST',
@@ -113,7 +118,7 @@ function reservation() {
 
               if(code === "2000") {
                   alert("예약이 완료되었습니다.");
-                  location.href = '/';
+                  location.href = '/reservation/confirm';
               } else if (code === "9001") {
                   alert("예약 가능 인원을 초과하였습니다.");
                   $("#people").val("");

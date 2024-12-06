@@ -28,6 +28,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.json', name: 'json', version: '20230227'
+
+    // SLF4J API
+    implementation 'org.slf4j:slf4j-api:2.0.14'
+    // Logback (SLF4J 구현체)
+    implementation 'ch.qos.logback:logback-classic:1.5.6'
+    // 추가적으로 Logback XML 파싱을 위한 의존성 (필요 시)
+    implementation 'ch.qos.logback:logback-core:1.5.6'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

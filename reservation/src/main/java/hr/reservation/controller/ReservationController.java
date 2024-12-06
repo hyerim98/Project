@@ -54,5 +54,10 @@ public class ReservationController {
         return new ErrorResult(Constants.SUCCESS_CODE, Constants.SUCCESS_MSG);
     }
 
+    @GetMapping("/confirm")
+    public String reservationConfirm() {
+        return "reservation/reservationConfirm";
+    }
+
 
 }

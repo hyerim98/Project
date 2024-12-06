@@ -9,9 +9,11 @@ public class Constants {
     public static final String BAD_PARAMETER_CODE = "3001";
     public static final String BAD_REQUEST_CODE = "4001";
     public static final String RESERVATION_CAPA_EXCEED_CODE = "9001";
+    public static final String INTERNAL_SERVER_CODE = "5001";
 
     /* MESSAGE */
     public static final String BAD_PARAMETER_MSG = "파라미터 요청이 잘못되었습니다.";
     public static final String BAD_REQUEST_MSG = "잘못된 요청입니다.";
     public static final String RESERVATION_CAPA_EXCEED_MSG = "예약 가능 인원을 초과하였습니다.";
+    public static final String INTERNAL_SERVER_MSG = "오류 발생(UNKNOWN)";
 }

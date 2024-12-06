@@ -20,6 +20,13 @@ import java.util.Map;
 @RestControllerAdvice // 여러 컨트롤러에 있는 오류들을 한 곳에서 관리
 public class ErrControllerAdvice {
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResult unknownException(Exception e) {
+        log.error("[unknownException] ", e);
+        return new ErrorResult(Constants.INTERNAL_SERVER_CODE, Constants.INTERNAL_SERVER_MSG);
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST) // "200 OK"가 아닌 "400"으로 응답가게 하기 위해 추가
     public ErrorResult missingServletRequestParameterException(MissingServletRequestParameterException e) { // HttpMessageNotReadableException 해당 에러가 발생하면 처리하는 로직
         log.error("[missingServletRequestParameterException] ", e);
