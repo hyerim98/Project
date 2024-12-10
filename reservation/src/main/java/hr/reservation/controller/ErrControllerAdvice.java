@@ -22,16 +22,16 @@ import java.util.Map;
 public class ErrControllerAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    /*public ErrorResult unknownException(Exception e) { // 오류 - 코드
+    public ErrorResult unknownException(Exception e) { // 오류 - 코드
         log.error("[unknownException] ", e);
-        return new ErrorResult(Constants.INTERNAL_SERVER_CODE, Constants.INTERNAL_SERVER_MSG);
-    }*/
-    public ModelAndView unknownException(Exception e) { // 오류 - 페이지
+        return new ErrorResult(Constants.UNKNOWN_CODE, Constants.UNKNOWN_MSG);
+    }
+    /*public ModelAndView unknownException(Exception e) { // 오류 - 페이지
         log.error("[unknownException] ", e);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("error/500");
         return modelAndView;
-    }
+    }*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST) // "200 OK"가 아닌 "400"으로 응답가게 하기 위해 추가
