@@ -1,4 +1,4 @@
-let dataKeys; // timeList 받기
+let dataKeys = ['time10', 'time12', 'time14', 'time17']; // timeList 받기
 let chkTime; // timeList 중에 하나 선택했는지 확인 여부
 $(document).ready(function() {
     const dateInput = $("#date");
@@ -16,13 +16,11 @@ $(document).ready(function() {
           },
           dataType: 'json',
           success: function(datas) {
-              dataKeys = Object.keys(datas);
-
               const html = `
-                   <div class="rectangle" id="time10" onclick="timeTableClick('${dataKeys[0]}');">10:00<br>${datas.time10}매</div>
-                   <div class="rectangle" id="time12" onclick="timeTableClick('${dataKeys[1]}');">12:00<br>${datas.time12}매</div>
-                   <div class="rectangle" id="time14" onclick="timeTableClick('${dataKeys[2]}');">14:00<br>${datas.time14}매</div>
-                   <div class="rectangle" id="time17" onclick="timeTableClick('${dataKeys[3]}');">17:00<br>${datas.time17}매</div>
+                   <div class="rectangle" id="time10" onclick="timeTableClick('${datas[0].time}');">10:00<br>${datas[0].ticket}매</div>
+                   <div class="rectangle" id="time12" onclick="timeTableClick('${datas[1].time}');">12:00<br>${datas[1].ticket}매</div>
+                   <div class="rectangle" id="time14" onclick="timeTableClick('${datas[2].time}');">14:00<br>${datas[2].ticket}매</div>
+                   <div class="rectangle" id="time17" onclick="timeTableClick('${datas[3].time}');">17:00<br>${datas[3].ticket}매</div>
                `;
 
               $(".grid-container").html(html);

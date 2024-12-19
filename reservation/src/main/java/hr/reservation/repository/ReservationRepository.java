@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+// 사용 X - 추후에 삭제
 @Repository
 public class ReservationRepository {
     public static final Map<String, Map<String, Integer>> dateMap = new ConcurrentHashMap<>();

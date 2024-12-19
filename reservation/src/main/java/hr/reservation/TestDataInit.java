@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+// 사용 X -> 추후 삭제
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
@@ -18,7 +19,7 @@ public class TestDataInit {
     /**
      * 임시 데이터
      */
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         Map<String, Integer> timeMap1 = new HashMap<>();
         Map<String, Integer> timeMap2 = new HashMap<>();
