@@ -1,5 +1,6 @@
 package hr.reservation.controller;
 
+import hr.reservation.domain.error.AESPasswordEncryDecException;
 import hr.reservation.domain.error.BindingResultException;
 import hr.reservation.domain.error.Constants;
 import hr.reservation.domain.error.ErrorResult;
@@ -32,6 +33,13 @@ public class ErrControllerAdvice {
         modelAndView.setViewName("error/500");
         return modelAndView;
     }*/
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResult aesPasswordEncryDecException(AESPasswordEncryDecException e) {
+        log.error("[aesPasswordEncryDecException] ", e);
+        return new ErrorResult(Constants.PASSWORD_ENCDEC_CODE, Constants.PASSWORD_ENCDEC_MSG);
+    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST) // "200 OK"가 아닌 "400"으로 응답가게 하기 위해 추가

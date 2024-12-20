@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static hr.reservation.domain.dto.QTimeTable.*;
@@ -41,7 +42,10 @@ public class TimeTableQueryRepository {
         String time = form.getTime();
         int ticket = form.getPeople();
 
-        query.update(timeTable).set(timeTable.ticket, availableTicket - ticket).where(timeTable.date.eq(date).and(timeTable.time.eq(time))).execute();
+        query.update(timeTable)
+                .set(timeTable.ticket, availableTicket - ticket).set(timeTable.upDt, LocalDateTime.now())
+                .where(timeTable.date.eq(date).and(timeTable.time.eq(time)))
+                .execute();
     }
 
 

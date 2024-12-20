@@ -57,11 +57,17 @@ $(document).ready(function() {
                     if (input.validity.valueMissing) {
                       errorSpan.text("필수 값 입니다.");
                     } else if (input.validity.patternMismatch) {
-                      errorSpan.text("휴대폰 번호 형식에 맞게 입력해주세요.(010-1111-1111)");
+                        if(input.id === "phone") {
+                            errorSpan.text("휴대폰 번호 형식에 맞게 입력해주세요.(010-1111-1111)");
+                        } else {
+                            errorSpan.text("비밀번호는 최소 8자, 하나 이상의 대문자, 소문자, 숫자 및 특수 문자가 포함되어야 합니다.");
+                        }
                     } else if (input.validity.typeMismatch) {
                       errorSpan.text("이메일 형식에 맞게 입력해주세요.(abc@naver.com)");
-                    } else {
-                      errorSpan.text("1명이상 부터 가능합니다.");
+                    } else if(input.validity.tooShort) {
+                        errorSpan.text("비밀번호 8자리 이상으로 설정해주세요.");
+                    } else if(input.validity.tooLong) {
+                        errorSpan.text("비밀번호 20자리 이하로 설정해주세요.");
                     }
                 }
                 else {
@@ -70,7 +76,6 @@ $(document).ready(function() {
             });
             return;
         }
-
         reservation();
     });
 });
@@ -93,6 +98,7 @@ function reservation() {
     let phone = $("#phone").val();
     let people = $("#people").val();
     let date = $("#date").val().split("-");
+    let password = $("#password").val();
 
     if(chkTime === undefined) {
         alert("시간을 선택해주세요");
@@ -108,7 +114,8 @@ function reservation() {
               phone: phone,
               people: people,
               date: date[1] + date[2],
-              time: chkTime
+              time: chkTime,
+              password: password
           },
           dataType: 'json',
           success: function(data) {

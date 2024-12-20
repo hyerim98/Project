@@ -1,5 +1,6 @@
 package hr.reservation.service;
 
+import hr.reservation.domain.AESPasswordEncryption;
 import hr.reservation.domain.ReservationForm;
 import hr.reservation.domain.dto.ReservationTable;
 import hr.reservation.repository.ReservationTableRepository;
@@ -24,6 +25,7 @@ public class ReservationTableService {
         reservationTable.setPhone(form.getPhone());
         reservationTable.setEmail(form.getEmail());
         reservationTable.setTime(form.getTime());
+        reservationTable.setPassword(AESPasswordEncryption.encrypt(form.getPassword()));
 
         reservationTableRepository.save(reservationTable);
     }
