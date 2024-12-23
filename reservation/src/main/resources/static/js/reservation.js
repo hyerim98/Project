@@ -92,7 +92,7 @@ function timeTableClick(time) {
     chkTime = time;
 }
 
-function reservation() {
+async function reservation() {
     let name = $("#name").val();
     let email = $("#email").val();
     let phone = $("#phone").val();
@@ -100,12 +100,49 @@ function reservation() {
     let date = $("#date").val().split("-");
     let password = $("#password").val();
 
+    let data = {
+        name: name,
+        email: email,
+        phone: phone,
+        people: people,
+        date: date[1] + date[2],
+        time: chkTime,
+        password: password
+    };
+
     if(chkTime === undefined) {
         alert("시간을 선택해주세요");
         return;
     }
 
-    $.ajax({
+    try {
+        // 예약 요청
+        const reservationRes = await $.ajax({
+            url: '/reservation',
+            type: 'POST',
+            data: data,
+            dataType: 'json'
+        });
+
+        // 예약 요청 응답 받은 후
+        const code = reservationRes.code;
+        if(code === "2000") {
+            alert("예약이 완료되었습니다.");
+            location.href = `/reservation/confirm?name=${encodeURIComponent(name)}&date=${encodeURIComponent(date[1] + date[2] + chkTime)}&people=${encodeURIComponent(people)}`;
+        } else if (code === "9001") {
+            alert("예약 가능 인원을 초과하였습니다.");
+            $("#people").val("");
+        } else {
+            alert("예약에 실패하였습니다.");
+            location.reload();
+        }
+    } catch (error) {
+        console.log(error);
+        alert("예약에 실패하였습니다.");
+        location.reload();
+    }
+
+    /*$.ajax({
           url: '/reservation',
           type: 'POST',
           data: {
@@ -136,5 +173,5 @@ function reservation() {
             alert("예약에 실패하였습니다.");
             location.reload();
           }
-    });
+    });*/
 }

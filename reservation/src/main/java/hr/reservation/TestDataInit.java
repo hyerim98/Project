@@ -25,41 +25,5 @@ public class TestDataInit {
         Map<String, Integer> timeMap2 = new HashMap<>();
         Map<String, Integer> timeMap3 = new HashMap<>();
         Map<String, Integer> timeMap4 = new HashMap<>();
-
-        timeMap1.put(Constants.TIME10, 71);
-        dateMap.put(Constants.DATE527, timeMap1);
-        timeMap1.put(Constants.TIME12, 23);
-        dateMap.put(Constants.DATE527, timeMap1);
-        timeMap1.put(Constants.TIME14, 55);
-        dateMap.put(Constants.DATE527, timeMap1);
-        timeMap1.put(Constants.TIME17, 123);
-        dateMap.put(Constants.DATE527, timeMap1);
-
-        timeMap2.put(Constants.TIME10, 72);
-        dateMap.put(Constants.DATE530, timeMap2);
-        timeMap2.put(Constants.TIME12, 24);
-        dateMap.put(Constants.DATE530, timeMap2);
-        timeMap2.put(Constants.TIME14, 56);
-        dateMap.put(Constants.DATE530, timeMap2);
-        timeMap2.put(Constants.TIME17, 124);
-        dateMap.put(Constants.DATE530, timeMap2);
-
-        timeMap3.put(Constants.TIME10, 73);
-        dateMap.put(Constants.DATE606, timeMap3);
-        timeMap3.put(Constants.TIME12, 25);
-        dateMap.put(Constants.DATE606, timeMap3);
-        timeMap3.put(Constants.TIME14, 57);
-        dateMap.put(Constants.DATE606, timeMap3);
-        timeMap3.put(Constants.TIME17, 125);
-        dateMap.put(Constants.DATE606, timeMap3);
-
-        timeMap4.put(Constants.TIME10, 85);
-        dateMap.put(Constants.DATE613, timeMap4);
-        timeMap4.put(Constants.TIME12, 41);
-        dateMap.put(Constants.DATE613, timeMap4);
-        timeMap4.put(Constants.TIME14, 12);
-        dateMap.put(Constants.DATE613, timeMap4);
-        timeMap4.put(Constants.TIME17, 96);
-        dateMap.put(Constants.DATE613, timeMap4);
     }
 }

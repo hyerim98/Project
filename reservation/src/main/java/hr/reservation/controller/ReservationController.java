@@ -5,20 +5,17 @@ import hr.reservation.domain.dto.TimeTable;
 import hr.reservation.domain.error.BindingResultException;
 import hr.reservation.domain.error.Constants;
 import hr.reservation.domain.error.ErrorResult;
-import hr.reservation.repository.ReservationRepository;
 import hr.reservation.service.ReservationTableService;
 import hr.reservation.service.TimeTableService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -60,7 +57,8 @@ public class ReservationController {
     }
 
     @GetMapping("/confirm")
-    public String reservationConfirm() {
+    public String reservationConfirm(@RequestParam String name, @RequestParam String date, @RequestParam int people, Model model) {
+        log.info("hrdel : " + name + " " + date + " " + people);
         return "reservation/reservationConfirm";
     }
 
