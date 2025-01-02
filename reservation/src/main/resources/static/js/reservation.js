@@ -128,7 +128,8 @@ async function reservation() {
         const code = reservationRes.code;
         if(code === "2000") {
             alert("예약이 완료되었습니다.");
-            location.href = `/reservation/confirm?name=${encodeURIComponent(name)}&date=${encodeURIComponent(date[1] + date[2] + chkTime)}&people=${encodeURIComponent(people)}`;
+            let dateTime = new Date().getFullYear() + "년 " + date[1] + "월 " + date[2] + "일 " + chkTime.substring(4) + "시";
+            location.href = `/reservation/confirm?name=${encodeURIComponent(name)}&date=${encodeURIComponent(dateTime)}&people=${encodeURIComponent(people)}`;
         } else if (code === "9001") {
             alert("예약 가능 인원을 초과하였습니다.");
             $("#people").val("");

@@ -58,7 +58,9 @@ public class ReservationController {
 
     @GetMapping("/confirm")
     public String reservationConfirm(@RequestParam String name, @RequestParam String date, @RequestParam int people, Model model) {
-        log.info("hrdel : " + name + " " + date + " " + people);
+        model.addAttribute("name", name);
+        model.addAttribute("date", date);
+        model.addAttribute("people", people + "명");
         return "reservation/reservationConfirm";
     }
 
