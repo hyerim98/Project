@@ -78,6 +78,39 @@ $(document).ready(function() {
         }
         reservation();
     });
+
+    // '예약확인/변경/취소' 버튼 클릭
+    $("#reservationChkBtn").on('click', function (event) {
+        event.preventDefault(); // 기본 폼 제출 동작 중단
+
+        // 커스텀 동작 수행 (예: 유효성 검사 또는 AJAX 전송)
+        const formData = $("#reservationForm")[0]; // DOM 객체로 변환
+        const inputs = formData.querySelectorAll("input"); // 모든 input 필드 가져오기
+
+        // 유효성 검사 실패 시 잘못된 필드 확인
+        if(!formData.checkValidity()) {
+            inputs.forEach((input) => {
+                const errorSpan = $("#" + input.id + "Error"); // 해당 필드의 에러 메시지 요소
+                if (!input.checkValidity()) {
+                    // 필드 유효성 검사 실패 시 에러 메시지 표시
+                    if (input.validity.valueMissing) {
+                      errorSpan.text("필수 값 입니다.");
+                    } else if (input.validity.patternMismatch) {
+                        if(input.id === "phone") {
+                            errorSpan.text("휴대폰 번호 형식에 맞게 입력해주세요.(010-1111-1111)");
+                        } else {
+                            errorSpan.text("비밀번호는 최소 8자, 하나 이상의 대문자, 소문자, 숫자 및 특수 문자가 포함되어야 합니다.");
+                        }
+                    }
+                }
+                else {
+                  errorSpan.text(""); // 유효하면 에러 메시지 제거
+                }
+            });
+            return;
+        }
+        reservationChk();
+    });
 });
 
 // 시간 선택
@@ -100,6 +133,13 @@ async function reservation() {
     let date = $("#date").val().split("-");
     let password = $("#password").val();
 
+    if(chkTime === undefined) {
+        alert("시간을 선택해주세요");
+        return;
+    }
+
+    $("#time").val(chkTime);
+
     let data = {
         name: name,
         email: email,
@@ -110,10 +150,6 @@ async function reservation() {
         password: password
     };
 
-    if(chkTime === undefined) {
-        alert("시간을 선택해주세요");
-        return;
-    }
 
     try {
         // 예약 요청
@@ -128,8 +164,10 @@ async function reservation() {
         const code = reservationRes.code;
         if(code === "2000") {
             alert("예약이 완료되었습니다.");
-            let dateTime = new Date().getFullYear() + "년 " + date[1] + "월 " + date[2] + "일 " + chkTime.substring(4) + "시";
-            location.href = `/reservation/confirm?name=${encodeURIComponent(name)}&date=${encodeURIComponent(dateTime)}&people=${encodeURIComponent(people)}`;
+            let reservationForm = document.getElementById("reservationForm");
+            reservationForm.method = "POST";
+            reservationForm.action = "/reservation/confirm";
+            reservationForm.submit();
         } else if (code === "9001") {
             alert("예약 가능 인원을 초과하였습니다.");
             $("#people").val("");
@@ -175,4 +213,39 @@ async function reservation() {
             location.reload();
           }
     });*/
+}
+
+async function reservationChk() {
+    let name = $("#name").val();
+    let phone = $("#phone").val();
+    let password = $("#password").val();
+
+    let data = {
+        name: name,
+        phone: phone,
+        password: password
+    };
+
+    try {
+        // 예약 확인 요청
+        const reservationRes = await $.ajax({
+            url: '/reservation/chk',
+            type: 'POST',
+            data: data,
+            dataType: 'json'
+        });
+
+        // 예약 확인 요청 응답 받은 후
+        const code = reservationRes.code;
+        if(code === "2000") {
+
+        } else {
+            alert("예약 확인에 실패하였습니다.");
+            location.reload();
+        }
+    } catch (error) {
+        console.log(error);
+        alert("예약 확인에 실패하였습니다.");
+        location.reload();
+    }
 }

@@ -56,12 +56,17 @@ public class ReservationController {
         return new ErrorResult(Constants.SUCCESS_CODE, Constants.SUCCESS_MSG);
     }
 
-    @GetMapping("/confirm")
-    public String reservationConfirm(@RequestParam String name, @RequestParam String date, @RequestParam int people, Model model) {
-        model.addAttribute("name", name);
-        model.addAttribute("date", date);
-        model.addAttribute("people", people + "명");
+    @PostMapping("/confirm")
+    public String reservationConfirm(@ModelAttribute ReservationForm form,  Model model) {
+        model.addAttribute("name", form.getName());
+        model.addAttribute("date", form.getDate() + " " + form.getTime().substring(4) + "시");
+        model.addAttribute("people", form.getPeople() + "명");
         return "reservation/reservationConfirm";
+    }
+
+    @GetMapping("/chk")
+    public String reservationChk() {
+        return "reservation/reservationChk";
     }
 
 

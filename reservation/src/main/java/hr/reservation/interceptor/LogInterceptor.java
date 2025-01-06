@@ -14,6 +14,11 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // favicon.ico 요청 차단
+        if ("/favicon.ico".equals(request.getRequestURI())) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+
         String uuid = UUID.randomUUID().toString();
         String requestURI = request.getRequestURI();
         request.setAttribute(LOG_ID, uuid);

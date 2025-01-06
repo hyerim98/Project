@@ -125,6 +125,7 @@
                   <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호 설정" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="비밀번호는 최소 8자, 하나 이상의 대문자, 소문자, 숫자 및 특수 문자가 포함되어야 합니다." required>
                   <div id="passwordError" class="field-error"></div>
                 </div>
+                <input th:type="hidden" name="time" id="time">
               </div>
 
               <div id="timeTable" class="form-group mt-3" th:style="'display: none'">

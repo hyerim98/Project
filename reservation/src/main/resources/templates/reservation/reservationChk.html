@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Starter Page - Yummy Bootstrap Template</title>
+  <title>Index - Yummy Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -27,21 +27,21 @@
   <!-- Main CSS File -->
   <link th:href="@{/assets/css/main.css}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Yummy
-  * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!--추가-->
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  <link th:href="@{/css/reservation.css}" rel="stylesheet">
+  <script th:src="@{/js/reservation.js}"></script>
+  <style>
+
+  </style>
 </head>
 
-<body class="starter-page-page">
+<body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index2.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <a href="../index2.html" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">Yummy</h1>
@@ -50,55 +50,94 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero">Home<br></a></li>
+          <li><a href="#hero" class="active">Home<br></a></li>
           <li><a href="#about">About</a></li>
-          <li class="dropdown"><a href="#"><span>Reservation</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#chefs">Chefs</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a th:href="@{/reservation}">예약</a></li>
-              <li><a th:href="@{/reservation/chk}">예약확인/변경/취소</a></li>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
-          <li><a href="#events">Events</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" th:href="@{/reservation}">예약</a>
+      <a class="btn-getstarted" href="../index2.html#book-a-table">Book a Table</a>
 
     </div>
   </header>
 
   <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="container">
-        <h1>Starter Page</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index2.html">Home</a></li>
-            <li class="current">Starter Page</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Starter Section Section -->
-    <section id="starter-section" class="starter-section section">
+    <section id="book-a-table" class="book-a-table section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Starter Section</h2>
-        <p><span>Section Title</span> <span class="description-title">Direda Flowed</span></p>
+        <h2>예약확인/변경/취소</h2>
+        <p><span>Book Your</span> <span class="description-title">Stay With Us<br></span></p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up">
-        <p>Use this page as a starter for your own custom pages.</p>
+      <div class="container">
+
+        <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="col-lg-4 reservation-img" style="background-image: url(/assets/img/reservation.jpg);"></div>
+
+          <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+            <form id="reservationChkForm" class="php-email-form">
+              <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                  <input type="text" class="form-control" name="name" id="name" placeholder="이름" required>
+                  <div id="nameError" class="field-error"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                  <input type="tel" class="form-control" name="phone" id="phone" placeholder="010-1111-1111" pattern="\d{3}-\d{3,4}-\d{4}" required>
+                  <div id="phoneError" class="field-error"></div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                  <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호" minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="비밀번호는 최소 8자, 하나 이상의 대문자, 소문자, 숫자 및 특수 문자가 포함되어야 합니다." required>
+                  <div id="passwordError" class="field-error"></div>
+                </div>
+              </div>
+
+              <div id="timeTable" class="form-group mt-3" th:style="'display: none'">
+                <div class="grid-container">
+                    <div class="rectangle">10:00<br>150매</div>
+                    <div class="rectangle">12:00<br>150매</div>
+                    <div class="rectangle">14:00<br>150매</div>
+                    <div class="rectangle">17:00<br>150매</div>
+                </div>
+              </div>
+
+              <div class="text-center mt-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+                <button th:type="button" id="reservationChkBtn">확인</button>
+              </div>
+            </form>
+          </div><!-- End Reservation Form -->
+
+        </div>
+
       </div>
 
-    </section><!-- /Starter Section Section -->
-
+    </section>
   </main>
 
   <footer id="footer" class="footer dark-background">
