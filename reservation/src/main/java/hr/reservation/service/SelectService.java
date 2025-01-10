@@ -3,6 +3,8 @@ package hr.reservation.service;
 import hr.reservation.domain.ReservationForm;
 import hr.reservation.domain.dto.ReservationTable;
 import hr.reservation.domain.dto.TimeTable;
+import hr.reservation.repository.ReservationRepository;
+import hr.reservation.repository.ReservationTableRepository;
 import hr.reservation.repository.TimeTableQueryRepository;
 import hr.reservation.repository.TimeTableRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static hr.reservation.domain.dto.QTimeTable.timeTable;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class TimeTableService {
-    private final TimeTableRepository timeTableRepository;
+public class SelectService {
     private final TimeTableQueryRepository timeTableQueryRepository;
+    private final ReservationRepository reservationRepository;
 
     // 날짜로 시간 일정 찾기
     public List<TimeTable> findTimeTableByDate(String date) {
@@ -32,8 +31,8 @@ public class TimeTableService {
         return timeTableQueryRepository.availableTicket(form);
     }
 
-    // 남은 티켓 수 업데이트
-    public void updateTicket(int availableTicket, ReservationForm form) {
-        timeTableQueryRepository.updateTicket(availableTicket, form);
+    // 예약 리스트
+    public List<ReservationTable> reservationList(ReservationForm form) {
+        return reservationRepository.findReservationList(form);
     }
 }

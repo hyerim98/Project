@@ -84,7 +84,7 @@ $(document).ready(function() {
         event.preventDefault(); // 기본 폼 제출 동작 중단
 
         // 커스텀 동작 수행 (예: 유효성 검사 또는 AJAX 전송)
-        const formData = $("#reservationForm")[0]; // DOM 객체로 변환
+        const formData = $("#reservationChkForm")[0]; // DOM 객체로 변환
         const inputs = formData.querySelectorAll("input"); // 모든 input 필드 가져오기
 
         // 유효성 검사 실패 시 잘못된 필드 확인
@@ -216,7 +216,11 @@ async function reservation() {
 }
 
 async function reservationChk() {
-    let name = $("#name").val();
+    let reservationChkForm = document.getElementById("reservationChkForm");
+    reservationChkForm.method = "POST";
+    reservationChkForm.action = "/reservation/chk";
+    reservationChkForm.submit();
+    /*let name = $("#name").val();
     let phone = $("#phone").val();
     let password = $("#password").val();
 
@@ -247,5 +251,5 @@ async function reservationChk() {
         console.log(error);
         alert("예약 확인에 실패하였습니다.");
         location.reload();
-    }
+    }*/
 }

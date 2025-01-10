@@ -5,8 +5,8 @@ import hr.reservation.domain.dto.TimeTable;
 import hr.reservation.domain.error.BindingResultException;
 import hr.reservation.domain.error.Constants;
 import hr.reservation.domain.error.ErrorResult;
-import hr.reservation.service.ReservationTableService;
-import hr.reservation.service.TimeTableService;
+import hr.reservation.service.ReservationService;
+import hr.reservation.service.SelectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
-    private final TimeTableService timeTableService;
-    private final ReservationTableService reservationTableService;
+    private final SelectService selectService;
+    private final ReservationService reservationService;
 
     @GetMapping
     public String reservationPage() {
@@ -33,7 +33,7 @@ public class ReservationController {
     @ResponseBody
     @PostMapping("/timeList")
     public List<TimeTable> getSpareSeat(@RequestParam String date) { // @RequestParam : URL 상에서 데이터를 찾음(form 태그로 전송), @RequestBody : 객체로 전달받기 가능(body로 전송)
-        return timeTableService.findTimeTableByDate(date);
+        return selectService.findTimeTableByDate(date);
     }
 
     @ResponseBody
@@ -45,14 +45,14 @@ public class ReservationController {
         }
 
         // 예약 인원이 최대 가능 수용을 초과한 경우
-        int availablePeople = timeTableService.availableTicket(form);
+        int availablePeople = selectService.availableTicket(form);
         if(availablePeople < form.getPeople()) {
             log.info("[reservation] 예약 가능 인원을 초과하였습니다.({})",form.getName());
             return new ErrorResult(Constants.RESERVATION_CAPA_EXCEED_CODE, Constants.RESERVATION_CAPA_EXCEED_MSG);
         }
 
-        reservationTableService.reserve(form);
-        timeTableService.updateTicket(availablePeople, form);
+        reservationService.reserve(form);
+        reservationService.updateTicket(availablePeople, form);
         return new ErrorResult(Constants.SUCCESS_CODE, Constants.SUCCESS_MSG);
     }
 
@@ -67,6 +67,12 @@ public class ReservationController {
     @GetMapping("/chk")
     public String reservationChk() {
         return "reservation/reservationChk";
+    }
+
+    @PostMapping("/chk")
+    public String reservationList(@ModelAttribute ReservationForm form) {
+        log.info("hrdel : " + selectService.reservationList(form));
+        return "reservation/reservationList";
     }
 
 
