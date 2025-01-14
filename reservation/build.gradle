@@ -51,6 +51,8 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     // AES
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+    // MAIL 인증
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 }
 
