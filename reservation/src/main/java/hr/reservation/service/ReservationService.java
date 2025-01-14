@@ -27,8 +27,8 @@ public class ReservationService {
         reservationTable.setDate(form.getDate());
         reservationTable.setName(form.getName());
         reservationTable.setTicket(form.getPeople());
-        reservationTable.setPhone(form.getPhone());
-        reservationTable.setEmail(form.getEmail());
+        reservationTable.setPhone(AESPasswordEncryption.encrypt(form.getPhone()));
+        reservationTable.setEmail(AESPasswordEncryption.encrypt(form.getEmail()));
         reservationTable.setTime(form.getTime());
         reservationTable.setPassword(AESPasswordEncryption.encrypt(form.getPassword()));
 
