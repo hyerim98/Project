@@ -14,6 +14,9 @@ public class ReservationTable {
     @SequenceGenerator(name = "seq_reservationtable", sequenceName = "seq_reservationtable", allocationSize = 1)
     private Long seqId;
 
+    @Column(name = "reservation_id", length = 50, nullable = false)
+    private String reservationId;
+
     @Column(name = "date", length = 4, nullable = false)
     private String date;
 
@@ -23,7 +26,7 @@ public class ReservationTable {
     @Column(name = "name", length = 10, nullable = false)
     private String name;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50, nullable = false)
     private String email;
 
     @Column(name = "phone", length = 13, nullable = false)

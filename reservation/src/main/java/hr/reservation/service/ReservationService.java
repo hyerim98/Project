@@ -2,6 +2,7 @@ package hr.reservation.service;
 
 import hr.reservation.domain.AESPasswordEncryption;
 import hr.reservation.domain.ReservationForm;
+import hr.reservation.domain.UniqueReservationId;
 import hr.reservation.domain.dto.ReservationTable;
 import hr.reservation.repository.ReservationRepository;
 import hr.reservation.repository.ReservationTableRepository;
@@ -24,6 +25,7 @@ public class ReservationService {
     // 예약
     public void reserve(ReservationForm form) {
         ReservationTable reservationTable = new ReservationTable();
+        reservationTable.setReservationId(UniqueReservationId.generateReservationId());
         reservationTable.setDate(form.getDate());
         reservationTable.setName(form.getName());
         reservationTable.setTicket(form.getPeople());
