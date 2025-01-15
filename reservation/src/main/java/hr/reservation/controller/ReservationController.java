@@ -1,12 +1,14 @@
 package hr.reservation.controller;
 
 import hr.reservation.domain.ReservationForm;
+import hr.reservation.domain.UniqueReservationId;
 import hr.reservation.domain.dto.TimeTable;
 import hr.reservation.domain.error.BindingResultException;
 import hr.reservation.domain.error.Constants;
 import hr.reservation.domain.error.ErrorResult;
 import hr.reservation.service.ReservationService;
 import hr.reservation.service.SelectService;
+import hr.reservation.service.mail.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import java.util.List;
 public class ReservationController {
     private final SelectService selectService;
     private final ReservationService reservationService;
+    private final EmailService emailService;
 
     @GetMapping
     public String reservationPage() {
@@ -51,8 +54,13 @@ public class ReservationController {
             return new ErrorResult(Constants.RESERVATION_CAPA_EXCEED_CODE, Constants.RESERVATION_CAPA_EXCEED_MSG);
         }
 
+        form.setReservationId(UniqueReservationId.generateReservationId());
         reservationService.reserve(form);
         reservationService.updateTicket(availablePeople, form);
+
+        // 메일 발송
+        emailService.sendAuthCode(form.getEmail(), form);
+
         return new ErrorResult(Constants.SUCCESS_CODE, Constants.SUCCESS_MSG);
     }
 

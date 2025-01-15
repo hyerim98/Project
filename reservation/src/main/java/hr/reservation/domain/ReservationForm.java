@@ -10,6 +10,9 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @RequiredArgsConstructor
 public class ReservationForm {
+    @Size(max = 17)
+    private String reservationId;
+
     @NotBlank
     @Size(max = 10)
     private String name;

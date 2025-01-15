@@ -163,11 +163,12 @@ async function reservation() {
         // 예약 요청 응답 받은 후
         const code = reservationRes.code;
         if(code === "2000") {
-            alert("예약이 완료되었습니다.");
-            let reservationForm = document.getElementById("reservationForm");
+            alert("예약이 완료되었습니다. 이메일을 확인해주세요.");
+            location.reload();
+            /*let reservationForm = document.getElementById("reservationForm");
             reservationForm.method = "POST";
             reservationForm.action = "/reservation/confirm";
-            reservationForm.submit();
+            reservationForm.submit();*/
         } else if (code === "9001") {
             alert("예약 가능 인원을 초과하였습니다.");
             $("#people").val("");

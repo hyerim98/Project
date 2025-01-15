@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// 사용X -> 추후에 삭제
 @RestController
 @RequestMapping("/api/email")
 public class EmailController {

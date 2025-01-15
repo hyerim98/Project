@@ -25,7 +25,7 @@ public class ReservationService {
     // 예약
     public void reserve(ReservationForm form) {
         ReservationTable reservationTable = new ReservationTable();
-        reservationTable.setReservationId(UniqueReservationId.generateReservationId());
+        reservationTable.setReservationId(form.getReservationId());
         reservationTable.setDate(form.getDate());
         reservationTable.setName(form.getName());
         reservationTable.setTicket(form.getPeople());
